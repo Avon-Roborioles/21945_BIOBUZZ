@@ -28,12 +28,12 @@ public class DriveControls {
 
     public void drive(Gamepad gamepad) {
 
-        // Read joystick inputs
+
         double drive = -gamepad.left_stick_y;
         double strafe = gamepad.left_stick_x;
         double turn = gamepad.right_stick_x;
 
-        // Apply deadzone
+
         if (Math.abs(drive) < DEADZONE) {
             drive = 0;
         }
@@ -46,7 +46,7 @@ public class DriveControls {
             turn = 0;
         }
 
-        // Reduce turning sensitivity
+
         turn *= TURN_SENSITIVITY;
 
         // Mecanum wheel calculations
@@ -55,7 +55,7 @@ public class DriveControls {
         double backLeftPower = drive - strafe + turn;
         double backRightPower = drive + strafe - turn;
 
-        // Normalize motor powers
+
         double maxPower = Math.max(1.0,
                 Math.max(
                         Math.max(Math.abs(frontLeftPower),
@@ -69,7 +69,7 @@ public class DriveControls {
         backLeftPower /= maxPower;
         backRightPower /= maxPower;
 
-        // Slow mode
+
         if (gamepad.left_bumper) {
             frontLeftPower *= SLOW_SPEED;
             frontRightPower *= SLOW_SPEED;
@@ -77,7 +77,7 @@ public class DriveControls {
             backRightPower *= SLOW_SPEED;
         }
 
-        // Apply motor power
+
         frontLeft.setPower(frontLeftPower);
         frontRight.setPower(frontRightPower);
         backLeft.setPower(backLeftPower);
